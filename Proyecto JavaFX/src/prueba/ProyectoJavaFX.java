@@ -24,7 +24,7 @@ public class ProyectoJavaFX extends Application {
   public void start(Stage primaryStage) throws Exception {
         PaneOrganizer rootContainer = new PaneOrganizer();
         Scene scene = new Scene(rootContainer.getRoot(),400,350);
-        primaryStage.setTitle("Busqueda archivos");
+        primaryStage.setTitle("Ingreso de ciclistas");
         primaryStage.setScene(scene);
         primaryStage.show();
 
