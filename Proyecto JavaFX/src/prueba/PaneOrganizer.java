@@ -5,10 +5,14 @@
  */
 package prueba;
 
+import entidades.Ciclista;
+import entidades.ObtenerBytes;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -88,6 +92,24 @@ public class PaneOrganizer {
             }
         });
         
+        boton_guardar.setOnAction(new EventHandler<ActionEvent>() {
+            
+            @Override
+            public void handle(ActionEvent ae){
+                try{
+                    ObtenerBytes obytes = new ObtenerBytes();
+                    String name = nombre.getText();
+                    byte[] foto =  obytes.extractBytes(ruta.getText());
+                    Ciclista c = new Ciclista(name,foto);
+                    ObjectOutputStream objOutputStream = new ObjectOutputStream(new FileOutputStream("Ciclista.dat"));
+                    objOutputStream.writeObject(c);
+                    
+                }catch(IOException ex){
+                    System.out.println(ex);
+                }
+                
+            }
+        });
 
     }
 
