@@ -15,9 +15,9 @@ import java.util.ArrayList;
  * @author VR
  */
 public class Archivo{
-    private static final String RUTA_ARCHIVO = "Ciclista.dat";
     
-    public static boolean crear(){
+    
+    public static boolean crear(String RUTA_ARCHIVO){
         EscribirArchivo archivo = new EscribirArchivo();
         try{            
             archivo.abrir(RUTA_ARCHIVO);
@@ -28,7 +28,7 @@ public class Archivo{
         return true;
     }
     
-    public static boolean borrar_contenido(){
+    public static boolean borrar_contenido(String RUTA_ARCHIVO){
         try{
             EscribirArchivo archivo = new EscribirArchivo();
             archivo.borrar_contenido(RUTA_ARCHIVO);
@@ -39,30 +39,31 @@ public class Archivo{
         return true;
     }
     
-    public static ArrayList<Ciclista> obtener_registros()throws Exception{
-        ArrayList<Ciclista> personas;
+    public static ArrayList<Ciclista> obtener_registros(String RUTA_ARCHIVO)throws Exception{
+        ArrayList<Ciclista> ciclistas;
         try{
             LeerArchivo archivo = new LeerArchivo();
             archivo.abrir(RUTA_ARCHIVO);
-            personas = archivo.obteniendo_objetos();
+            ciclistas = archivo.obteniendo_objetos();
             archivo.cerrar();
         }catch(Exception e){
             throw e;
         }    
-        return personas;        
+        return ciclistas;        
     }
     
-    public static boolean insertar_registro(Ciclista p){
+    public static boolean insertar_registro(String RUTA_ARCHIVO,Ciclista c){
         EscribirArchivo archivo = new EscribirArchivo();
         try{
             archivo.abrir(RUTA_ARCHIVO);
-            archivo.insertar_objeto(p);
+            archivo.insertar_objeto(c);
             archivo.cerrar(); 
         }catch(Exception e){
             return false;
         }                          
         return true;
     }
+    // se puede usar el mismo metodo de arriba cuando se quiera hacer con rutas
     
    /* public static boolean actualizar_registro(Persona p){
          ArrayList<Persona> personas = null;
@@ -76,13 +77,13 @@ public class Archivo{
          return Archivo.actualizar_registros(personas);         
     }*/
     
-    public static boolean actualizar_registros(ArrayList personas){
-        borrar_contenido();
+    public static boolean actualizar_registros(String RUTA_ARCHIVO,ArrayList ciclistas){
+        borrar_contenido(RUTA_ARCHIVO);
         EscribirArchivo archivo = new EscribirArchivo();
         try{            
             archivo.abrir(RUTA_ARCHIVO);
-            for(int i=0;i<personas.size();i++)
-                archivo.insertar_objeto(personas.get(i));
+            for(int i=0;i<ciclistas.size();i++)
+                archivo.insertar_objeto(ciclistas.get(i));
             archivo.cerrar();
         }catch(Exception e){
             return false;

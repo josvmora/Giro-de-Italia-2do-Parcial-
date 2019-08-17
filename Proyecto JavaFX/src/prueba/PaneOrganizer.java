@@ -102,8 +102,8 @@ public class PaneOrganizer {
                     String name = nombre.getText();
                     byte[] foto =  obytes.extractBytes(ruta.getText());
                     Ciclista c = new Ciclista(name,foto);
-                    Archivo.crear();
-                    Archivo.insertar_registro(c);
+                    Archivo.crear("Ciclista.dat");
+                    Archivo.insertar_registro("Ciclista.dat",c);
                     
                     
                 }catch(IOException ex){
