@@ -5,6 +5,7 @@
  */
 package prueba;
 
+import archivo.Archivo;
 import entidades.Ciclista;
 import entidades.ObtenerBytes;
 import java.io.BufferedReader;
@@ -95,14 +96,15 @@ public class PaneOrganizer {
         boton_guardar.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
-            public void handle(ActionEvent ae){
+           public void handle(ActionEvent ae){
                 try{
                     ObtenerBytes obytes = new ObtenerBytes();
                     String name = nombre.getText();
                     byte[] foto =  obytes.extractBytes(ruta.getText());
                     Ciclista c = new Ciclista(name,foto);
-                    ObjectOutputStream objOutputStream = new ObjectOutputStream(new FileOutputStream("Ciclista.dat"));
-                    objOutputStream.writeObject(c);
+                    Archivo.crear();
+                    Archivo.insertar_registro(c);
+                    
                     
                 }catch(IOException ex){
                     System.out.println(ex);
