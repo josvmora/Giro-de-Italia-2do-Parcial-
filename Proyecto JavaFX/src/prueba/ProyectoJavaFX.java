@@ -22,9 +22,9 @@ public class ProyectoJavaFX extends Application {
     @Override
       
   public void start(Stage primaryStage) throws Exception {
-        PaneOrganizer rootContainer = new PaneOrganizer();
+        PaneOrganizerP rootContainer = new PaneOrganizerP();        
         Scene scene = new Scene(rootContainer.getRoot(),400,350);
-        primaryStage.setTitle("Ingreso de ciclistas");
+        primaryStage.setTitle("Menu");
         primaryStage.setScene(scene);
         primaryStage.show();
 
