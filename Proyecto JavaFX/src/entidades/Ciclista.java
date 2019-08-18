@@ -24,13 +24,7 @@ public class Ciclista implements Serializable{
         this.nombre = nombre;
         this.imagen = imagen;
     }
-    public byte[] extractBytes(File imgPath) throws IOException{
-        BufferedImage bufferedImage = ImageIO.read(imgPath);
-        //RecortarFotografia recorte = new RecortarFotografia(bufferedImage,100,100);
-        WritableRaster raster =  bufferedImage.getRaster();
-        DataBufferByte data = (DataBufferByte) raster.getDataBuffer();
-        return (data.getData());
-    }
+  
 
     /**
      * @return the nombre
