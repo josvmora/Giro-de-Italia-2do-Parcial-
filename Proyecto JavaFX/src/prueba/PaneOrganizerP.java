@@ -77,7 +77,16 @@ public class PaneOrganizerP {
                  System.exit(0);
             }
     });
-        
+        rutas.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle (ActionEvent event){
+                Stage stage = new Stage();
+                PaneOrganizerRU rootContainer = new PaneOrganizerRU();
+                Scene scene = new Scene(rootContainer.getRoot(),900,600);
+                stage.setTitle("Ingreso de Rutas");
+                stage.setScene(scene);
+                stage.show();
+            }
+    });
         
         
         

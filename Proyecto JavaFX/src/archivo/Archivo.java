@@ -6,6 +6,7 @@
 package archivo;
 
 import entidades.Ciclista;
+import entidades.Rutas;
 import java.io.IOException;
 import java.util.ArrayList;
 //import utilidades.Validacion;
@@ -61,6 +62,20 @@ public class Archivo{
         }catch(Exception e){
             return false;
         }                          
+        return true;
+    }
+    
+    
+      public static boolean insertar_registro_Rutas(String RURTA_ARCHIVO,Rutas r){
+        EscribirArchivo archivo = new EscribirArchivo();
+        try{
+            archivo.abrir(RURTA_ARCHIVO);
+            archivo.insertar_objeto(r);
+            archivo.cerrar();
+            
+        }catch(Exception e){
+            return false;
+        }
         return true;
     }
     // se puede usar el mismo metodo de arriba cuando se quiera hacer con rutas
