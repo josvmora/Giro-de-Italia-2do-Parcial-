@@ -19,10 +19,13 @@ import javax.imageio.ImageIO;
 public class Ciclista implements Serializable{
     private String nombre;
     private byte[] imagen;
+    private static int contadori = 1;
+    private int codigo;
     
     public Ciclista(String nombre, byte[] imagen){
         this.nombre = nombre;
         this.imagen = imagen;
+        this.codigo = contadori++;
     }
   
 
@@ -53,5 +56,11 @@ public class Ciclista implements Serializable{
     public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
+
+    @Override
+    public String toString() {
+        return  codigo + "|" + nombre  ;
+    }
+    
     
 }

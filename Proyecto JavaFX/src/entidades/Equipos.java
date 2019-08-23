@@ -15,13 +15,14 @@ import java.util.ArrayList;
 public class Equipos implements Serializable {
     private String nombre_equipo;
     private byte[] imagen_equipo;
-    private ArrayList<Ciclista> ciclistas;
+    private ArrayList<Integer> ciclistasid;
 
-    public Equipos(String nombre_equipo, byte[] imagen_equipo, ArrayList<Ciclista> ciclistas) {
+    public Equipos(String nombre_equipo, byte[] imagen_equipo, ArrayList<Integer> ciclistasid) {
         this.nombre_equipo = nombre_equipo;
         this.imagen_equipo = imagen_equipo;
-        this.ciclistas = ciclistas;
+        this.ciclistasid = ciclistasid;
     }
+    
 
     public String getNombre_equipo() {
         return nombre_equipo;
@@ -39,17 +40,15 @@ public class Equipos implements Serializable {
         this.imagen_equipo = imagen_equipo;
     }
 
-    public ArrayList<Ciclista> getCiclistas() {
-        return ciclistas;
+    public ArrayList<Integer> getCiclistasid() {
+        return ciclistasid;
     }
 
-    public void setCiclistas(ArrayList<Ciclista> ciclistas) {
-        this.ciclistas = ciclistas;
+    public void setCiclistasid(ArrayList<Integer> ciclistasid) {
+        this.ciclistasid = ciclistasid;
     }
 
-    public void agregarCiclista(Ciclista c){
-        ciclistas.add(c);
-    }
+    
     
     
     

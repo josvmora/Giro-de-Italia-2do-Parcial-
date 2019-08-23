@@ -55,7 +55,7 @@ public class PaneOrganizer {
         lb2 = new Label("Imagen:");
         nombre = new TextField();
         ruta = new TextField();
-        nombre.setPromptText("Ingrese su nombre: ");
+        nombre.setPromptText("Ingrese su nombre ");
         boton_guardar = new Button("Guardar");
         file_chooser = new Button("...");
         root.add(lb1,0,0);
@@ -104,8 +104,9 @@ public class PaneOrganizer {
                     Ciclista c = new Ciclista(name,foto);
                     Archivo.crear("Ciclista.dat");
                     Archivo.insertar_registro("Ciclista.dat",c);
-                    
-                    
+                    JOptionPane.showMessageDialog(null, "Ciclista Ingresado");
+                    nombre.setText(null);
+                    ruta.setText(null);
                 }catch(IOException ex){
                     System.out.println(ex);
                 }

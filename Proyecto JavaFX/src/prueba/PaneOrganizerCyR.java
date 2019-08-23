@@ -50,16 +50,23 @@ public class PaneOrganizerCyR {
                   Stage stage=new Stage();
                   PaneOrganizer rootContainer = new PaneOrganizer();        
                   Scene scene = new Scene(rootContainer.getRoot(),400,350);
-                  stage.setTitle("Ingreso de ciclistas y rutas");
+                  stage.setTitle("Ingreso de ciclistas");
                   stage.setScene(scene);
-                  stage.show();
-                  
-                  
-                 
-                    
-                 
-                 
+                  stage.show();                   
             }
-    });
+        });
+        
+        Ingreso_de_equipos.setOnAction(new EventHandler<ActionEvent>(){
+             public void handle(ActionEvent event){
+                  Stage stage=new Stage();
+                  PaneOrganizerE rootContainer = new PaneOrganizerE();        
+                  Scene scene = new Scene(rootContainer.getRoot(),600,550);
+                  stage.setTitle("Ingreso de equipos");
+                  stage.setScene(scene);
+                  stage.show();                   
+            }
+        });
+        
+        
     }
 }
