@@ -46,7 +46,8 @@ public class ObtenerBytes {
         System.out.println("image created");
         File file = new File(nombre_ruta+".png");
         String path = file.getAbsolutePath();
-        Image image = new Image(path);
+        System.out.println(path+"************sss*");
+        Image image = new Image(file.toURI().toURL().toString());
         return image;
          
     }
