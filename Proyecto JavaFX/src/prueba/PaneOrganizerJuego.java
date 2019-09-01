@@ -22,6 +22,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
@@ -36,11 +38,10 @@ public class PaneOrganizerJuego {
 
     private GridPane root;
     private ComboBox jugadores;
-    private ComboBox<Image> ruta_jugar;
+    private ComboBox<Rutas> ruta_jugar;
     private Button boton;
     private Label lb1;
     private Label lb2;
-    private ArrayList<Rutas> obj_rutas;
 
     public PaneOrganizerJuego() {
         createContent();
@@ -51,25 +52,32 @@ public class PaneOrganizerJuego {
     }
 
     public void createContent() {
+        ObservableList<String> n_jugadores = FXCollections.observableArrayList("1", "2", "3", "4", "5");
+        ObservableList<Rutas> os=FXCollections.observableArrayList();
+        try{
+            ArrayList<Rutas> rutas = Archivo.obtener_registros_rutas("Rutas.dat");
+            for(Rutas ruta: rutas){
+                os.add(ruta);
+            }
+        }catch(Exception e){
+            System.out.println("ERROR");
+        }
         root = new GridPane();
         boton = new Button("Continuar");
-        ObservableList<String> n_jugadores = FXCollections.observableArrayList("1", "2", "3", "4", "5");
-        //ObservableList<Image> img_rutas = FXCollections.observableArrayList();
-        final ObservableList<Image> images = colocarImagenes();
-        ruta_jugar = createComboBox(images);
-
+        //final ObservableList<Image> images = colocarImagenes();
+        ruta_jugar = new ComboBox(os);
         jugadores = new ComboBox(n_jugadores);
-        ruta_jugar = new ComboBox<>();
+        //ruta_jugar = new ComboBox<>();
         //ruta_jugar.getItems().addAll(img_rutas);
-        ruta_jugar.setButtonCell(new ListCell());
-        ruta_jugar.setCellFactory(listView -> new ImageListCell());
+        //ruta_jugar.setButtonCell(new ListCell());
+        ruta_jugar.setCellFactory(c -> new StatusListCell());
         lb1 = new Label("SELECCIONE NÚMERO DE JUGADORES");
         lb2 = new Label("SELECCIONE LA RUTA A UTILIZAR");
         root.add(lb1, 0, 0);
         root.add(jugadores, 1, 0);
         root.add(lb2, 0, 1);
         root.add(ruta_jugar, 1, 1);
-        root.add(boton, 2, 2);
+        root.add(boton, 2, 5);
         boton.setAlignment(Pos.CENTER);
         root.setHgap(10);
         root.setVgap(10);
@@ -78,79 +86,29 @@ public class PaneOrganizerJuego {
 
     }
 
-    private ComboBox<Image> createComboBox(ObservableList<Image> data) {
-        ComboBox<Image> combo = new ComboBox<>();
-        combo.getItems().addAll(data);
-        combo.setButtonCell(new ImageListCell());
-        combo.setCellFactory(listView -> new ImageListCell());
-        combo.getSelectionModel().select(0);
-        return combo;
-    }
+    public class StatusListCell extends ListCell<Rutas> {
 
-    private ObservableList<Image> colocarImagenes() {
-        final ObservableList<Image> data = FXCollections.observableArrayList();
-
-        try {
-            System.out.println("11111");
-            obj_rutas = Archivo.obtener_registros_rutas("Rutas.dat");
-            System.out.println((obj_rutas).getClass());
-            System.out.println(obj_rutas + "-----------");
-            System.out.println("22222");
-
-            //System.out.println("*********     "+obj_rutas);
-            for (Rutas ruta : obj_rutas) {
+        @Override
+        protected void updateItem(Rutas item, boolean empty) {
+            super.updateItem(item, empty);
+            setGraphic(null);
+            setText(null);
+            if (item != null) {
+                ObtenerBytes ob = new ObtenerBytes();
+                Image imagen;
                 try {
-                    ObtenerBytes obj = new ObtenerBytes();
-                    Image imagen = obj.createImage(ruta.getImagen(), ruta.getNombre());
-//                    System.out.println(ruta+"____________");
-//                    System.out.println(ruta.getImagen().getClass()+"-------------");
-//                    BufferedImage imag = ImageIO.read(new ByteArrayInputStream(ruta.getImagen()));
-//                                        System.out.println(imag.getClass()+"********");
-//                    System.out.println("33333");
-//                    ImageIO.write(imag, "jpg", new File(ruta.getNombre()+".jpg"));
-//                    byte[] bytes = 
-                    //System.out.println("ARCHIVO_CREADO");
-                    //Image img = javafx.embed.swing.SwingFXUtils.toFXImage(imag, null);
-
-                    //Image img = new Image(new ByteArrayInputStream(ruta.getImagen()));
-                    //graphicsContext.drawImage(img, 10, 10, 100, 100);
-                    //System.out.println(img);
-                    //Thread.sleep(1000);
-                    data.add((imagen));
+                    imagen = ob.createImage(item.getImagen(), item.getNombre());
+                    ImageView imageView = new ImageView(imagen);
+                    imageView.setFitWidth(100);
+                    imageView.setFitHeight(100);
+                    setGraphic(imageView);
+                    setText(item.getNombre());
                 } catch (IOException ex) {
-                    System.out.println("ERRRO_1");
+                    Logger.getLogger(PaneOrganizerJuego.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
-        } catch (Exception e) {
-            System.out.println("ERROR");
         }
-        return data;
+
     }
-
-    public class ImageListCell extends ListCell {
-
-        private final ImageView view;
-
-        public ImageListCell() {
-            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-            view = new ImageView();
-        }
-
-        protected void updateItem(Image item, boolean empty) {
-            super.updateItem(item, empty);
-            if (item == null || empty) {
-                setGraphic(null);
-                setText(null);
-            } else {
-                //ImageView imageView = new ImageView(new Image(item));
-                view.setImage(item);
-                //view.setFitWidth(100);
-                //view.setFitHeight(100);
-                setGraphic(view);
-                //setText("a");
-            }
-        }
-    }
-
 }
