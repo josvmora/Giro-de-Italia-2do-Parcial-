@@ -57,29 +57,29 @@ public class Archivo{
     
     
       public static ArrayList<Equipos> obtener_registros_equipos(String RUTA_ARCHIVO)throws Exception{
-        ArrayList<Equipos> ciclistas;
+        ArrayList<Equipos> equipos;
         try{
             LeerArchivo archivo = new LeerArchivo();
             archivo.abrir(RUTA_ARCHIVO);
-            ciclistas = archivo.obteniendo_objetos();
+            equipos = archivo.obteniendo_objetos();
             archivo.cerrar();
         }catch(Exception e){
             throw e;
         }    
-        return ciclistas;        
+        return equipos;        
     }
     
       public static ArrayList<Rutas> obtener_registros_rutas(String RUTA_ARCHIVO)throws Exception{
-        ArrayList<Rutas> ciclistas;
+        ArrayList<Rutas> rutas;
         try{
             LeerArchivo archivo = new LeerArchivo();
             archivo.abrir(RUTA_ARCHIVO);
-            ciclistas = archivo.obteniendo_objetos();
+            rutas = archivo.obteniendo_objetos();
             archivo.cerrar();
         }catch(Exception e){
             throw e;
         }    
-        return ciclistas;        
+        return rutas;        
     }
       
       
