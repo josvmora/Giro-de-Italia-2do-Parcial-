@@ -83,6 +83,11 @@ public class Rutas implements Serializable {
     public void setEstaciones(ArrayList<Estaciones> estaciones) {
         this.estaciones = estaciones;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
     
     
 }
