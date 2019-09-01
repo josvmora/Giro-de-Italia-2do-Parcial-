@@ -87,7 +87,16 @@ public class PaneOrganizerP {
                 stage.show();
             }
     });
-        
+        Iniciar_juego.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                Stage stage = new Stage();
+                PaneOrganizerJuego rootContainer = new PaneOrganizerJuego();
+                Scene scene = new Scene(rootContainer.getRoot(),900,600);
+                stage.setTitle("Selección de jugadores y ruta");
+                stage.setScene(scene);
+                stage.show();
+            }
+        });
         
         
         
