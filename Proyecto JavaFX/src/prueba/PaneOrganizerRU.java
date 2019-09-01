@@ -5,6 +5,7 @@
  */
 package prueba;
 import archivo.Archivo;
+import entidades.Equipos;
 import entidades.Estaciones;
 import entidades.ObtenerBytes;
 import entidades.Rutas;
@@ -28,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
 import javafx.stage.FileChooser;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Hernan
@@ -76,6 +78,7 @@ public class PaneOrganizerRU {
         guardar_Button = new Button("Guardar");
         name_text.setPromptText("Ingrese el nombre de la ruta.");
         distance_text.setPromptText("Ingrese la distancia de la ruta");
+        
         ObservableList<String> items = FXCollections.observableArrayList();
         items.addAll("1","2","3","4");
         combobox = new ComboBox(items);
@@ -105,8 +108,8 @@ public class PaneOrganizerRU {
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(20,20,20,20));
         
-        ArrayList<Estaciones> estaciones_premios = new ArrayList<Estaciones>();
-        ObservableList<String> mostrar = FXCollections.observableArrayList();
+        //ArrayList<Estaciones> estaciones_premios = new ArrayList<Estaciones>();
+        //ObservableList<String> mostrar = FXCollections.observableArrayList();
         
         file_chooser.setOnAction(new EventHandler<ActionEvent>() {
             
@@ -135,13 +138,16 @@ public class PaneOrganizerRU {
                 String ele =(String)combobox.getValue();
                 Integer cat = Integer.parseInt(ele);
                 Integer kil = Integer.parseInt(distancia_premioText.getText());
-                mostrar.add("distancia: "+distancia_premioText.getText()+" Km"+" / Categoria: "+(String)combobox.getValue());
-                lista_estaciones.setItems(mostrar);
-                Estaciones estacion = new Estaciones(kil,cat);
-                estaciones_premios.add(estacion);
                 
-                distancia_premioText.setText(null);
-                combobox.setValue(null);
+                //mostrar.add("distancia: "+distancia_premioText.getText()+" Km"+" / Categoria: "+(String)combobox.getValue());
+                //lista_estaciones.setItems(mostrar);
+                Estaciones estacion = new Estaciones(kil,cat);
+                lista_estaciones.getItems().addAll(estacion);
+                
+                //estaciones_premios.add(estacion);
+                
+                //distancia_premioText.setText(null);
+                //combobox.setValue(null);
                
             }
         });
@@ -151,27 +157,41 @@ public class PaneOrganizerRU {
             @Override
             public void handle (ActionEvent event){
                 try{
+                    
+                    
+                    
                     ObtenerBytes obytes = new ObtenerBytes();
                     String nombreDeRuta = name_text.getText();
                     Integer kilometros = Integer.parseInt(distance_text.getText());
                     byte [] imagen = obytes.extractBytes(path_text.getText());
-                    Rutas ruta = new Rutas(nombreDeRuta,kilometros,imagen,estaciones_premios);
+                    
+                    
+                    ArrayList<Estaciones> ep= new ArrayList<Estaciones>(lista_estaciones.getItems());
+              
+                    
+                    
+                    Rutas ruta = new Rutas(nombreDeRuta,kilometros,imagen,ep);
                     Archivo.crear("Rutas.dat");
                     Archivo.insertar_registro_Rutas("Rutas.dat", ruta);
-                    
+                    JOptionPane.showMessageDialog(null, "Ruta Ingresada");
                     name_text.setText(null);
                     distance_text.setText(null);
                     path_text.setText(null);
-                    lista_estaciones.setItems(null);
+                    lista_estaciones.getItems().clear();
                     imageView.setImage(null);
+                    distancia_premioText.setText(null);
+                    combobox.setValue(null);
                     
+              
+                    
+
+                                      
                 }catch(IOException e){
                     System.out.println(e);
                 }
+  
                 
-                
-                    
-                
+                                    
             }
         });
         

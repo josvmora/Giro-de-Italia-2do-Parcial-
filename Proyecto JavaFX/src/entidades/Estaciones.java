@@ -50,5 +50,11 @@ public class Estaciones implements Serializable{
     public void setCategoria(Integer categoria) {
         this.categoria = categoria;
     }
+
+    @Override
+    public String toString() {
+        return "distancia: "+kilometro+" Km"+" / Categoria: "+categoria;
+    }
+    
     
 }

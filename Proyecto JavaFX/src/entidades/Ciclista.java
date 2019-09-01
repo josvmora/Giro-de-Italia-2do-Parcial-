@@ -57,6 +57,14 @@ public class Ciclista implements Serializable{
         this.imagen = imagen;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+    
+    
+    
+    
+
     @Override
     public String toString() {
         return  codigo + "|" + nombre  ;

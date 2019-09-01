@@ -6,6 +6,7 @@
 package archivo;
 
 import entidades.Ciclista;
+import entidades.Equipos;
 import entidades.Rutas;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +54,41 @@ public class Archivo{
         return ciclistas;        
     }
     
+    
+    
+      public static ArrayList<Equipos> obtener_registros_equipos(String RUTA_ARCHIVO)throws Exception{
+        ArrayList<Equipos> ciclistas;
+        try{
+            LeerArchivo archivo = new LeerArchivo();
+            archivo.abrir(RUTA_ARCHIVO);
+            ciclistas = archivo.obteniendo_objetos();
+            archivo.cerrar();
+        }catch(Exception e){
+            throw e;
+        }    
+        return ciclistas;        
+    }
+    
+      public static ArrayList<Rutas> obtener_registros_rutas(String RUTA_ARCHIVO)throws Exception{
+        ArrayList<Rutas> ciclistas;
+        try{
+            LeerArchivo archivo = new LeerArchivo();
+            archivo.abrir(RUTA_ARCHIVO);
+            ciclistas = archivo.obteniendo_objetos();
+            archivo.cerrar();
+        }catch(Exception e){
+            throw e;
+        }    
+        return ciclistas;        
+    }
+      
+      
+      
+      
+      
+    
+    //falta el de rutas 
+    
     public static boolean insertar_registro(String RUTA_ARCHIVO,Ciclista c){
         EscribirArchivo archivo = new EscribirArchivo();
         try{
@@ -78,6 +114,22 @@ public class Archivo{
         }
         return true;
     }
+      
+      public static boolean insertar_registro_Equipos(String RURTA_ARCHIVO,Equipos eq){
+        EscribirArchivo archivo = new EscribirArchivo();
+        try{
+            archivo.abrir(RURTA_ARCHIVO);
+            archivo.insertar_objeto(eq);
+            archivo.cerrar();
+            
+        }catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+      
+      
+      
     // se puede usar el mismo metodo de arriba cuando se quiera hacer con rutas
     
    /* public static boolean actualizar_registro(Persona p){

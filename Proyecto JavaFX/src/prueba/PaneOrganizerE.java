@@ -11,7 +11,9 @@ package prueba;
  */
 import archivo.Archivo;
 import entidades.Ciclista;
+import entidades.Equipos;
 import entidades.ObtenerBytes;
+import entidades.Rutas;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,11 +63,11 @@ public class PaneOrganizerE {
         return root;
     }
     public void createContent() {
-        ObservableList<String> os=FXCollections.observableArrayList();
+        ObservableList<Ciclista> os=FXCollections.observableArrayList();
         try{
             ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
             for(Ciclista c: ciclistas){
-                os.add(c.toString());
+                os.add(c);
             }
         }catch(Exception e){
             System.out.println("ERROR");
@@ -144,9 +146,41 @@ public class PaneOrganizerE {
                  }                
             }
         });
-        
-        
-        
+        ingresar.setOnAction(new EventHandler<ActionEvent>(){
+             public void handle(ActionEvent event){
+                 try{
+                 ArrayList<Integer> integrantes= new ArrayList<Integer>();
+                 ObtenerBytes obytes = new ObtenerBytes();
+                 byte[] foto =  obytes.extractBytes(ruta.getText());
+                 
+                 ObservableList<Ciclista> ep= lista.getItems();
+                 
+                 
+                 for(Ciclista c1: ep){
+                    integrantes.add(c1.getCodigo());
+                    }
+                 Equipos ep1= new Equipos(nombre.getText(),foto,integrantes);
+                 
+                 
+                 //falta el ingreso en el archivo 
+                  Archivo.crear("Equipos.dat");
+                  Archivo.insertar_registro_Equipos("Equipos.dat",ep1);
+                  JOptionPane.showMessageDialog(null, "Equipo Ingresado");
+                                
+                  lista.getItems().clear();
+                  nombre.setText(null);
+                  ruta.setText(null);    
+                 
+                 }catch(IOException ex){
+                    System.out.println(ex);
+                }
+ 
+                 
+                 
+                 
+                 }                
+            
+        });
         
         
         
