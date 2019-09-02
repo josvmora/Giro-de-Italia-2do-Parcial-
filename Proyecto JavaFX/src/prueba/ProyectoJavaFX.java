@@ -18,12 +18,12 @@ import javafx.stage.Stage;
  * @author JHON
  */
 public class ProyectoJavaFX extends Application {
-    
+
     @Override
-      
-  public void start(Stage primaryStage) throws Exception {
-        PaneOrganizerP rootContainer = new PaneOrganizerP();        
-        Scene scene = new Scene(rootContainer.getRoot(),400,350);
+
+    public void start(Stage primaryStage) throws Exception {
+        PaneOrganizerP rootContainer = new PaneOrganizerP();
+        Scene scene = new Scene(rootContainer.getRoot(), 400, 350);
         primaryStage.setTitle("Menu");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -36,5 +36,5 @@ public class ProyectoJavaFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
