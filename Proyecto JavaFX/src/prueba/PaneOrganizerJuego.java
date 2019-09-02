@@ -24,10 +24,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
@@ -42,6 +46,8 @@ public class PaneOrganizerJuego {
     private Button boton;
     private Label lb1;
     private Label lb2;
+    private Rutas ruta_seleccionada;
+    private int cant_jugadores;
 
     public PaneOrganizerJuego() {
         createContent();
@@ -64,11 +70,8 @@ public class PaneOrganizerJuego {
         }
         root = new GridPane();
         boton = new Button("Continuar");
-        //final ObservableList<Image> images = colocarImagenes();
         ruta_jugar = new ComboBox(os);
         jugadores = new ComboBox(n_jugadores);
-        //ruta_jugar = new ComboBox<>();
-        //ruta_jugar.getItems().addAll(img_rutas);
         //ruta_jugar.setButtonCell(new ListCell());
         ruta_jugar.setCellFactory(c -> new StatusListCell());
         lb1 = new Label("SELECCIONE NÚMERO DE JUGADORES");
@@ -83,6 +86,21 @@ public class PaneOrganizerJuego {
         root.setVgap(10);
         root.setAlignment(Pos.TOP_CENTER);
         root.setPadding(new Insets(20, 20, 20, 20));
+        
+        boton.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent event){
+                cant_jugadores = (int)jugadores.getValue();
+                ruta_seleccionada = (Rutas)ruta_jugar.getValue();
+                Stage stage = new Stage();
+                PaneOrganizerSeleccion rootcontainer = new PaneOrganizerSeleccion();
+                Scene scene = new Scene(rootcontainer.getRoot(),900,600);
+                stage.setTitle("Selección de ciclistas");
+                stage.setScene(scene);
+                stage.show();
+            
+        }
+        });
 
     }
 
@@ -110,5 +128,21 @@ public class PaneOrganizerJuego {
             }
         }
 
+    }
+    
+    public void setRuta(Rutas ruta){
+        this.ruta_seleccionada = ruta;
+    }
+    
+    public Rutas getRuta(){
+        return ruta_seleccionada;
+    }
+    
+    public void setCantidadJugadores(int n_jugadores){
+        this.cant_jugadores = n_jugadores;
+    }
+    
+    public int getCantidadJugadores(){
+        return cant_jugadores;
     }
 }
