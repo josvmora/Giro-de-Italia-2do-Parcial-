@@ -35,7 +35,7 @@ public class PaneOrganizerSeleccion {
     public void createContent(){
         ObservableList<Ciclista> ol = FXCollections.observableArrayList();
         try{
-            ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclistas.dat");
+            ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
             for(Ciclista c: ciclistas){
                 ol.add(c);
             }

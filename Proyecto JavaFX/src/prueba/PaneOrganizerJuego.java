@@ -90,7 +90,15 @@ public class PaneOrganizerJuego {
         boton.setOnAction(new EventHandler<ActionEvent>(){
             @Override
             public void handle(ActionEvent event){
-                cant_jugadores = (int)jugadores.getValue();
+                
+                
+                //pequeñas modificaciones
+                String elemento =(String)jugadores.getValue();
+                //cant_jugadores = (int)jugadores.getValue();
+                cant_jugadores=Integer.parseInt(elemento);
+                //se terminan las modificaciones XD
+                
+                
                 ruta_seleccionada = (Rutas)ruta_jugar.getValue();
                 Stage stage = new Stage();
                 PaneOrganizerSeleccion rootcontainer = new PaneOrganizerSeleccion();
@@ -129,6 +137,9 @@ public class PaneOrganizerJuego {
         }
 
     }
+    
+    
+    //¿Que hace esto aqui? XD
     
     public void setRuta(Rutas ruta){
         this.ruta_seleccionada = ruta;
