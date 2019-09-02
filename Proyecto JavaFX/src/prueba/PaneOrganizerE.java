@@ -141,9 +141,12 @@ public class PaneOrganizerE {
         eliminar.setOnAction(new EventHandler<ActionEvent>(){
              public void handle(ActionEvent event){
                  int c=lista.getItems().size();
-                 if (c!=0){
-                    lista.getItems().remove(c-1);
-                 }                
+                    if (c!=0){
+                        int n_prueba=lista.getSelectionModel().getSelectedIndex();
+                        if(n_prueba!=-1){
+                            lista.getItems().remove(n_prueba);
+                        }
+                    }     
             }
         });
         ingresar.setOnAction(new EventHandler<ActionEvent>(){
