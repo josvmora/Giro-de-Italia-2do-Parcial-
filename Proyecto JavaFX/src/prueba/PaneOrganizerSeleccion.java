@@ -7,6 +7,7 @@ package prueba;
 
 import archivo.Archivo;
 import entidades.Ciclista;
+import entidades.CiclistaSeleccionado;
 import entidades.Equipos;
 import entidades.Jugador;
 import entidades.ObtenerBytes;
@@ -46,6 +47,8 @@ public class PaneOrganizerSeleccion {
     private TextField nombre_jugador;
     private Label lb1;
     private Label lb2;
+    private Label lb3;
+    private ComboBox posiciones_ciclista;
     private static ArrayList<Jugador> jugadores = new ArrayList();
     private int n_max;
     private int jugador_n = 1;
@@ -62,6 +65,7 @@ public class PaneOrganizerSeleccion {
     }
 
     public void createContent() {
+         ObservableList<Integer> n_posiciones = FXCollections.observableArrayList(1, 2, 3, 4, 5);
         ObservableList<Ciclista> ol = FXCollections.observableArrayList();
         try {
             ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
@@ -82,9 +86,17 @@ public class PaneOrganizerSeleccion {
         ciclista_seleccionado = new ComboBox(ol);
         iniciar = new Button("Iniciar simulador");
         lb2 = new Label("Nombre del jugador:");
+        
+        lb3= new Label("Seleccione posiciones de llegada");
+        posiciones_ciclista=new ComboBox(n_posiciones);
+        
         root.add(lb2, 0, 0);
         root.add(nombre_jugador, 1, 0);
         root.add(lb1, 0, 1);
+        
+        root.add(lb3,1,1);
+        root.add(posiciones_ciclista,1,2);
+        
         root.add(ciclista_seleccionado, 0, 2);
         root.add(agregar, 2, 2);
         root.add(eliminar, 2, 3);
@@ -97,10 +109,24 @@ public class PaneOrganizerSeleccion {
         root.setAlignment(Pos.CENTER);
         root.setPadding(new Insets(20, 20, 20, 20));
 
+        
+        
+        
+        
+        //asumimos posiciones repetidas
+        
+        
+        
+        
+        
+        
         agregar.setOnAction(new EventHandler<ActionEvent>() {
 
             public void handle(ActionEvent event) {                
-              ciclistas_seleccionados.getItems().addAll(ciclista_seleccionado.getValue());                 
+              //crear una instancia de la clase ciclista seleccionado
+              
+              CiclistaSeleccionado cs= new CiclistaSeleccionado((Ciclista)ciclista_seleccionado.getValue(),(Integer)posiciones_ciclista.getValue());
+              ciclistas_seleccionados.getItems().addAll(cs);                 
             }
         });
         
@@ -123,16 +149,19 @@ public class PaneOrganizerSeleccion {
                 }
             }
         });
+        
+        
+        
         ingresar.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 try {
-                    Ciclista[] seleccionados = new Ciclista[5];
-                    ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
+                    CiclistaSeleccionado[] seleccionados = new CiclistaSeleccionado[5];
+                    ObservableList<CiclistaSeleccionado> ciclistas = ciclistas_seleccionados.getItems();
                    /// corregir el while genera que solo se guarde el ultimo ciclista guardado
                     if(ciclistas.size()==5){       
                         if (jugador_n < n_max) { 
                         int i = 0;
-                        for (Ciclista cl : ciclistas) {
+                        for (CiclistaSeleccionado cl : ciclistas) {
                             seleccionados[i] = cl;
                             i++;
                         }                                                                               
@@ -144,7 +173,7 @@ public class PaneOrganizerSeleccion {
                         nombre_jugador.setText("Nombre del jugador " + (jugador_n ));
                      } else {
                         int i = 0;
-                        for (Ciclista cl : ciclistas) {
+                        for (CiclistaSeleccionado cl : ciclistas) {
                             seleccionados[i] = cl;
                             i++;
                         }
@@ -159,7 +188,7 @@ public class PaneOrganizerSeleccion {
                         ingresar.setDisable(true);
                         for(Jugador j1: jugadores){
                             System.out.println(j1.getCiclistas_elegidos());
-                            for(Ciclista c:j1.getCiclistas_elegidos() ){
+                            for(CiclistaSeleccionado c:j1.getCiclistas_elegidos() ){
                                 System.out.println(c);
                             }        
                         }
