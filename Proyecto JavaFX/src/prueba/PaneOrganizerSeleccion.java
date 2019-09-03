@@ -48,7 +48,7 @@ public class PaneOrganizerSeleccion {
     private Label lb2;
     private static ArrayList<Jugador> jugadores = new ArrayList();
     private int n_max;
-    private static int jugador_n = 1;
+    private int jugador_n = 1;
     private Rutas ruta;
 
     public PaneOrganizerSeleccion(int n, Rutas ruta) {
@@ -77,7 +77,7 @@ public class PaneOrganizerSeleccion {
         eliminar = new Button("Eliminar ciclista");
         ingresar = new Button("Aceptar");
         lb1 = new Label("Seleccione 5 ciclistas:");
-        nombre_jugador = new TextField("Nombre jugador 1");
+        nombre_jugador = new TextField("Nombre del jugador 1");
         ciclistas_seleccionados = new ListView();
         ciclista_seleccionado = new ComboBox(ol);
         iniciar = new Button("Iniciar simulador");
@@ -133,17 +133,16 @@ public class PaneOrganizerSeleccion {
             public void handle(ActionEvent event) {
                 try {
                     Ciclista[] seleccionados = new Ciclista[5];
-
                     ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
-
                     for (Ciclista cl : ciclistas) {
                         int i = 0;
                         while (i < 5) {
                             seleccionados[0] = cl;
                             i++;
                         }
-                    }
-                    if (jugador_n <= n_max) {
+                    }/// corregir el while genera que solo se guarde el ultimo ciclista guardado
+                    
+                    if (jugador_n < n_max) {
                         jugador = new Jugador(nombre_jugador.getText(), seleccionados);
                         jugador_n++;
                         JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
@@ -151,8 +150,24 @@ public class PaneOrganizerSeleccion {
                         ciclistas_seleccionados.getItems().clear();
                         nombre_jugador.setText("Nombre del jugador " + (jugador_n ));
                     } else {
-                        System.out.println("Total máximo de jugadores registrados, inicie el simulador");
+                        jugador = new Jugador(nombre_jugador.getText(), seleccionados);
+                        jugador_n++;
+                        JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
+                        jugadores.add(jugador);
+                        JOptionPane.showMessageDialog(null, "Total máximo de jugadores registrados, inicie el simulador");
+                        //System.out.println("Total máximo de jugadores registrados, inicie el simulador");
+                        ciclistas_seleccionados.getItems().clear();
+                        nombre_jugador.setText(null);
                         ingresar.setDisable(true);
+                        
+                        
+                        
+                        for(Jugador j1: jugadores){
+                            System.out.println(j1);
+                    }
+                        
+                        
+                        
                     }
 
                     /*
