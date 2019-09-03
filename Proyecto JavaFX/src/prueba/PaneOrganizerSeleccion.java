@@ -134,13 +134,25 @@ public class PaneOrganizerSeleccion {
                 try {
                     Ciclista[] seleccionados = new Ciclista[5];
                     ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
+                    int i = 0;
                     for (Ciclista cl : ciclistas) {
-                        int i = 0;
-                        while (i < 5) {
-                            seleccionados[0] = cl;
+                        
+                        //while (i < ciclistas.size()) {
+                            seleccionados[i] = cl;
                             i++;
-                        }
+                        //}
                     }/// corregir el while genera que solo se guarde el ultimo ciclista guardado
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    if(ciclistas.size()>0 &&  ciclistas.size()<=5){
+                    
                     
                     if (jugador_n < n_max) {
                         jugador = new Jugador(nombre_jugador.getText(), seleccionados);
@@ -163,11 +175,23 @@ public class PaneOrganizerSeleccion {
                         
                         
                         for(Jugador j1: jugadores){
-                            System.out.println(j1);
+                            System.out.println(j1.getCiclistas_elegidos());
+                            for(Ciclista c:j1.getCiclistas_elegidos() ){
+                                System.out.println(c);
+                            }
+                                
                     }
+                    }    
                         
                         
-                        
+                    }
+                    
+                    else if(ciclistas.size()==0){
+                        JOptionPane.showMessageDialog(null, "Debe por lo menos ingresar a un ciclista");
+                    }
+                    
+                    else{
+                        JOptionPane.showMessageDialog(null, "Solo puede ingresar un maximo de 5 ciclistas");
                     }
 
                     /*
