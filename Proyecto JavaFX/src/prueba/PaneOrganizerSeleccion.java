@@ -48,7 +48,7 @@ public class PaneOrganizerSeleccion {
     private Label lb2;
     private static ArrayList<Jugador> jugadores;
     private final int n_max;
-    private static int jugador_n = 1;
+    private static int jugador_n = 0;
     private Rutas ruta;
 
     public PaneOrganizerSeleccion(int n, Rutas ruta) {
@@ -149,7 +149,9 @@ public class PaneOrganizerSeleccion {
                     ciclistas_seleccionados.getItems().clear();
                     nombre_jugador.setText("Nombre del jugador "+jugador_n+1);
                     }else{
-                        System.out.println("Total máximo de jugadores registrados, inicie el simulador");}
+                        System.out.println("Total máximo de jugadores registrados, inicie el simulador");
+                        ingresar.setDisable(true);
+                    }
 
                     /*
                     ArrayList<Integer> integrantes = new ArrayList<Integer>();
