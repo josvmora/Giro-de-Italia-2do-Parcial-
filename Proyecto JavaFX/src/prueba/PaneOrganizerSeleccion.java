@@ -129,7 +129,7 @@ public class PaneOrganizerSeleccion {
                     Ciclista[] seleccionados = new Ciclista[5];
                     ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
                    /// corregir el while genera que solo se guarde el ultimo ciclista guardado
-                    if(ciclistas.size()>0 &&  ciclistas.size()<=5){       
+                    if(ciclistas.size()==5){       
                         if (jugador_n < n_max) { 
                         int i = 0;
                         for (Ciclista cl : ciclistas) {
@@ -167,11 +167,11 @@ public class PaneOrganizerSeleccion {
                     }
                     
                     else if(ciclistas.size()==0){
-                        JOptionPane.showMessageDialog(null, "Debe por lo menos ingresar a un ciclista");
+                        JOptionPane.showMessageDialog(null, "No ha seleccionado a ningun ciclista");
                     }
                     
                     else{
-                        JOptionPane.showMessageDialog(null, "Solo puede ingresar un maximo de 5 ciclistas");
+                        JOptionPane.showMessageDialog(null, "Debe ingresar a cinco ciclistas, ni mas ni menos");
                     }
 
                     /*
