@@ -46,9 +46,9 @@ public class PaneOrganizerSeleccion {
     private TextField nombre_jugador;
     private Label lb1;
     private Label lb2;
-    private static ArrayList<Jugador> jugadores;
-    private final int n_max;
-    private static int jugador_n = 0;
+    private static ArrayList<Jugador> jugadores = new ArrayList();
+    private int n_max;
+    private static int jugador_n = 1;
     private Rutas ruta;
 
     public PaneOrganizerSeleccion(int n, Rutas ruta) {
@@ -80,21 +80,22 @@ public class PaneOrganizerSeleccion {
         nombre_jugador = new TextField("Nombre jugador 1");
         ciclistas_seleccionados = new ListView();
         ciclista_seleccionado = new ComboBox(ol);
+        iniciar = new Button("Iniciar simulador");
         lb2 = new Label("Nombre del jugador:");
-        root.add(lb2,0,0);
-        root.add(nombre_jugador,1,0);
-        root.add(lb1,0,1);
-        root.add(ciclista_seleccionado,0,2);
-        root.add(agregar,2,2);
-        root.add(eliminar,2,3);
+        root.add(lb2, 0, 0);
+        root.add(nombre_jugador, 1, 0);
+        root.add(lb1, 0, 1);
+        root.add(ciclista_seleccionado, 0, 2);
+        root.add(agregar, 2, 2);
+        root.add(eliminar, 2, 3);
         root.add(limpiar, 2, 4);
-        root.add(ingresar,1,5);
-        root.add(iniciar,1,6);
-        root.add(ciclistas_seleccionados,0,3);
+        root.add(ingresar, 1, 5);
+        root.add(iniciar, 1, 6);
+        root.add(ciclistas_seleccionados, 0, 3);
         ingresar.setAlignment(Pos.CENTER);
         iniciar.setAlignment(Pos.CENTER);
         root.setAlignment(Pos.CENTER);
-        root.setPadding(new Insets(20,20,20,20));
+        root.setPadding(new Insets(20, 20, 20, 20));
 
         agregar.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -142,13 +143,13 @@ public class PaneOrganizerSeleccion {
                             i++;
                         }
                     }
-                    if(jugador_n<n_max){
-                    jugador = new Jugador(nombre_jugador.getText(),seleccionados);
-                    JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
-                    jugadores.add(jugador);
-                    ciclistas_seleccionados.getItems().clear();
-                    nombre_jugador.setText("Nombre del jugador "+jugador_n+1);
-                    }else{
+                    if (jugador_n <= n_max) {
+                        jugador = new Jugador(nombre_jugador.getText(), seleccionados);
+                        JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
+                        jugadores.add(jugador);
+                        ciclistas_seleccionados.getItems().clear();
+                        nombre_jugador.setText("Nombre del jugador " + (jugador_n + 1));
+                    } else {
                         System.out.println("Total máximo de jugadores registrados, inicie el simulador");
                         ingresar.setDisable(true);
                     }
@@ -185,9 +186,9 @@ public class PaneOrganizerSeleccion {
         });
 
     }
-    
-    public ArrayList<Jugador> getJugador(){
-        return this.jugadores;
-    }
+
+//    public ArrayList<Jugador> getJugador() {
+//        return this.jugadores;
+//    }
 
 }

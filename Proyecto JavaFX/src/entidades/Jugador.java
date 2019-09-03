@@ -13,10 +13,15 @@ import java.util.ArrayList;
  */
 public class Jugador {
     private String nombre;
-    private ArrayList<Ciclista> ciclistas_elegidos;
+    private Ciclista[] ciclistas_elegidos;
     
-    public Jugador(String nombre, ArrayList<Ciclista> ciclistas_elegidos){
+    public Jugador(String nombre, Ciclista[] ciclistas_elegidos){
         this.nombre = nombre;
         this.ciclistas_elegidos = ciclistas_elegidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador{" + "nombre=" + nombre + ", ciclistas_elegidos=" + ciclistas_elegidos + '}';
     }
 }

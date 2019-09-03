@@ -17,9 +17,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
 import archivo.Archivo;
 import entidades.ObtenerBytes;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,12 +24,10 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javax.imageio.ImageIO;
 import entidades.Jugador;
 
 /**
@@ -49,7 +44,7 @@ public class PaneOrganizerJuego {
     private Label lb2;
     private Rutas ruta_seleccionada;
     private int cant_jugadores;
-    private ArrayList<Jugador> jugadores;
+    //private ArrayList<Jugador> jugadores;
 
     public PaneOrganizerJuego() {
         createContent();
@@ -134,7 +129,7 @@ public class PaneOrganizerJuego {
 //                            jugadores[i] = rootcontainer.getJugador();
 //                            valor = 0;
 //                        }
-//                    }
+                    //}
                     //i++;
 //                    stage.close();
                 }
