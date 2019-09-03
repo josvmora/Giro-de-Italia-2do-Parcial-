@@ -145,10 +145,11 @@ public class PaneOrganizerSeleccion {
                     }
                     if (jugador_n <= n_max) {
                         jugador = new Jugador(nombre_jugador.getText(), seleccionados);
+                        jugador_n++;
                         JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
                         jugadores.add(jugador);
                         ciclistas_seleccionados.getItems().clear();
-                        nombre_jugador.setText("Nombre del jugador " + (jugador_n + 1));
+                        nombre_jugador.setText("Nombre del jugador " + (jugador_n ));
                     } else {
                         System.out.println("Total máximo de jugadores registrados, inicie el simulador");
                         ingresar.setDisable(true);
