@@ -99,16 +99,11 @@ public class PaneOrganizerSeleccion {
 
         agregar.setOnAction(new EventHandler<ActionEvent>() {
 
-            public void handle(ActionEvent event) {
-                int i = 0;
-                if (i < 5) {
-                    ciclistas_seleccionados.getItems().addAll(ciclista_seleccionado.getValue());
-                } else {
-                    System.out.println("Solo se pueden seleccionar 5 ciclistas");
-                }
-
+            public void handle(ActionEvent event) {                
+              ciclistas_seleccionados.getItems().addAll(ciclista_seleccionado.getValue());                 
             }
         });
+        
         limpiar.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 ciclistas_seleccionados.getItems().clear();
@@ -129,39 +124,30 @@ public class PaneOrganizerSeleccion {
             }
         });
         ingresar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
             public void handle(ActionEvent event) {
                 try {
                     Ciclista[] seleccionados = new Ciclista[5];
                     ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
-                    int i = 0;
-                    for (Ciclista cl : ciclistas) {
-                        
-                        //while (i < ciclistas.size()) {
+                   /// corregir el while genera que solo se guarde el ultimo ciclista guardado
+                    if(ciclistas.size()>0 &&  ciclistas.size()<=5){       
+                        if (jugador_n < n_max) { 
+                        int i = 0;
+                        for (Ciclista cl : ciclistas) {
                             seleccionados[i] = cl;
                             i++;
-                        //}
-                    }/// corregir el while genera que solo se guarde el ultimo ciclista guardado
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    if(ciclistas.size()>0 &&  ciclistas.size()<=5){
-                    
-                    
-                    if (jugador_n < n_max) {
+                        }                                                                               
                         jugador = new Jugador(nombre_jugador.getText(), seleccionados);
                         jugador_n++;
                         JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
                         jugadores.add(jugador);
                         ciclistas_seleccionados.getItems().clear();
                         nombre_jugador.setText("Nombre del jugador " + (jugador_n ));
-                    } else {
+                     } else {
+                        int i = 0;
+                        for (Ciclista cl : ciclistas) {
+                            seleccionados[i] = cl;
+                            i++;
+                        }
                         jugador = new Jugador(nombre_jugador.getText(), seleccionados);
                         jugador_n++;
                         JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
@@ -171,19 +157,13 @@ public class PaneOrganizerSeleccion {
                         ciclistas_seleccionados.getItems().clear();
                         nombre_jugador.setText(null);
                         ingresar.setDisable(true);
-                        
-                        
-                        
                         for(Jugador j1: jugadores){
                             System.out.println(j1.getCiclistas_elegidos());
                             for(Ciclista c:j1.getCiclistas_elegidos() ){
                                 System.out.println(c);
-                            }
-                                
-                    }
-                    }    
-                        
-                        
+                            }        
+                        }
+                     }                            
                     }
                     
                     else if(ciclistas.size()==0){
