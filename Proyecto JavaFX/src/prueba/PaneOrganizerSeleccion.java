@@ -7,48 +7,185 @@ package prueba;
 
 import archivo.Archivo;
 import entidades.Ciclista;
+import entidades.Equipos;
+import entidades.Jugador;
+import entidades.ObtenerBytes;
 import entidades.Rutas;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author MI
  */
 public class PaneOrganizerSeleccion {
+
     private GridPane root;
     private ComboBox ciclista_seleccionado;
-    private ListView ciclistas_seleccionado;
-    
-    public PaneOrganizerSeleccion(){
+    private ListView ciclistas_seleccionados;
+    private Jugador jugador;
+    private Button agregar;
+    private Button limpiar;
+    private Button eliminar;
+    private Button ingresar;
+    private Button iniciar;
+    private TextField nombre_jugador;
+    private Label lb1;
+    private Label lb2;
+    private static ArrayList<Jugador> jugadores;
+    private final int n_max;
+    private static int jugador_n = 1;
+    private Rutas ruta;
+
+    public PaneOrganizerSeleccion(int n, Rutas ruta) {
+        this.ruta = ruta;
+        this.n_max = n;
         createContent();
     }
-    public Pane getRoot(){
+
+    public Pane getRoot() {
         return root;
     }
-    
-    public void createContent(){
+
+    public void createContent() {
         ObservableList<Ciclista> ol = FXCollections.observableArrayList();
-        try{
+        try {
             ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
-            for(Ciclista c: ciclistas){
+            for (Ciclista c : ciclistas) {
                 ol.add(c);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println("ERROR");
         }
         root = new GridPane();
-        
+        agregar = new Button("Agregar ciclista");
+        limpiar = new Button("Limpiar");
+        eliminar = new Button("Eliminar ciclista");
+        ingresar = new Button("Aceptar");
+        lb1 = new Label("Seleccione 5 ciclistas:");
+        nombre_jugador = new TextField("Nombre jugador 1");
+        ciclistas_seleccionados = new ListView();
+        ciclista_seleccionado = new ComboBox(ol);
+        lb2 = new Label("Nombre del jugador:");
+        root.add(lb2,0,0);
+        root.add(nombre_jugador,1,0);
+        root.add(lb1,0,1);
+        root.add(ciclista_seleccionado,0,2);
+        root.add(agregar,2,2);
+        root.add(eliminar,2,3);
+        root.add(limpiar, 2, 4);
+        root.add(ingresar,1,5);
+        root.add(iniciar,1,6);
+        root.add(ciclistas_seleccionados,0,3);
+        ingresar.setAlignment(Pos.CENTER);
+        iniciar.setAlignment(Pos.CENTER);
+        root.setAlignment(Pos.CENTER);
+        root.setPadding(new Insets(20,20,20,20));
+
+        agregar.setOnAction(new EventHandler<ActionEvent>() {
+
+            public void handle(ActionEvent event) {
+                int i = 0;
+                if (i < 5) {
+                    ciclistas_seleccionados.getItems().addAll(ciclista_seleccionado.getValue());
+                } else {
+                    System.out.println("Solo se pueden seleccionar 5 ciclistas");
+                }
+
+            }
+        });
+        limpiar.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                ciclistas_seleccionados.getItems().clear();
+                //nombre.setText(null);
+                //ruta.setText(null);                  
+            }
+        });
+
+        eliminar.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                int c = ciclistas_seleccionados.getItems().size();
+                if (c != 0) {
+                    int n_prueba = ciclistas_seleccionados.getSelectionModel().getSelectedIndex();
+                    if (n_prueba != -1) {
+                        ciclistas_seleccionados.getItems().remove(n_prueba);
+                    }
+                }
+            }
+        });
+        ingresar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    Ciclista[] seleccionados = new Ciclista[5];
+
+                    ObservableList<Ciclista> ciclistas = ciclistas_seleccionados.getItems();
+
+                    for (Ciclista cl : ciclistas) {
+                        int i = 0;
+                        while (i < 5) {
+                            seleccionados[0] = cl;
+                            i++;
+                        }
+                    }
+                    if(jugador_n<n_max){
+                    jugador = new Jugador(nombre_jugador.getText(),seleccionados);
+                    JOptionPane.showMessageDialog(null, "Selección ingresada satisfactoriamente");
+                    jugadores.add(jugador);
+                    ciclistas_seleccionados.getItems().clear();
+                    nombre_jugador.setText("Nombre del jugador "+jugador_n+1);
+                    }else{
+                        System.out.println("Total máximo de jugadores registrados, inicie el simulador");}
+
+                    /*
+                    ArrayList<Integer> integrantes = new ArrayList<Integer>();
+                    ObtenerBytes obytes = new ObtenerBytes();
+                    //byte[] foto =  obytes.extractBytes(ruta.getText());
+
+                    ObservableList<Ciclista> ep = ciclistas_seleccionados.getItems();
+                     */
+ /*
+                 for(Ciclista c1: ep){
+                    integrantes.add(c1.getCodigo());
+                    }
+                 Equipos ep1= new Equipos(nombre.getText(),foto,integrantes);
+                 
+                 
+                 //falta el ingreso en el archivo 
+                  Archivo.crear("Equipos.dat");
+                  Archivo.insertar_registro_Equipos("Equipos.dat",ep1);
+                  JOptionPane.showMessageDialog(null, "Equipo Ingresado");
+                                
+                  lista.getItems().clear();
+                  nombre.setText(null);
+                  ruta.setText(null);    
+                     */
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+
+            }
+
+        });
 
     }
-            
-            
-            
-
+    
+    public ArrayList<Jugador> getJugador(){
+        return this.jugadores;
+    }
 
 }
