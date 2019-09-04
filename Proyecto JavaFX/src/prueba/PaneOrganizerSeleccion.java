@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -27,6 +28,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -116,7 +118,17 @@ public class PaneOrganizerSeleccion {
         //asumimos posiciones repetidas
         
         
+        iniciar.setOnAction(new EventHandler<ActionEvent>(){
+            public void handle(ActionEvent event){
+                PaneOrganizerSimulador rootcontainer = new PaneOrganizerSimulador(ruta,jugadores);
+                Stage stage = new Stage();
+                Scene scene = new Scene(rootcontainer.getRoot(),900,400);
+                stage.setTitle("Simulador");
+                stage.setScene(scene);
+                stage.show();
+            }
         
+    });
         
         
         
