@@ -16,11 +16,13 @@ import javax.imageio.ImageIO;
  *
  * @author User
  */
-public class Ciclista implements Serializable{
+public class Ciclista implements Serializable, Comparable<Ciclista>{
     private String nombre;
     private byte[] imagen;
     private static int contadori = 1;
     private int codigo;
+    private long time_descuento;
+    private long time_llegada;
     
     public Ciclista(String nombre, byte[] imagen){
         this.nombre = nombre;
@@ -60,6 +62,42 @@ public class Ciclista implements Serializable{
     public int getCodigo() {
         return codigo;
     }
+
+    
+    
+    
+    public long getTime_descuento() {
+        return time_descuento;
+    }
+
+    public void setTime_descuento(long time_descuento) {
+        this.time_descuento += time_descuento;
+    }
+
+    public long getTime_llegada() {
+        return time_llegada;
+    }
+
+    public void setTime_llegada(long time_llegada) {
+        this.time_llegada = time_llegada;
+    }
+    
+    
+    public long tiempoTotal(){
+        return time_llegada-time_descuento;
+    }
+    
+    public int compareTo(Ciclista cl) {
+        if((time_llegada-time_descuento)<cl.tiempoTotal()){
+            return -1;
+        }
+        if((time_llegada-time_descuento)>cl.tiempoTotal()){
+            return 1;
+        }
+        return 0;
+    }
+    
+    
     
     
     

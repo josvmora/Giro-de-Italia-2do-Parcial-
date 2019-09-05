@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,8 +15,13 @@ import java.io.Serializable;
 public class Estaciones implements Serializable{
     private static Integer auto_incremental = 1;
     private final Integer codigo;
+   
+    
+    
+    
     private Integer kilometro;
     private Integer categoria;
+    private ArrayList<Ciclista> ciclis=new ArrayList<Ciclista>();
     
     public Estaciones(Integer kilometro, Integer categoria){
         this.codigo = Estaciones.auto_incremental++;
@@ -51,9 +57,36 @@ public class Estaciones implements Serializable{
         this.categoria = categoria;
     }
 
+    public ArrayList<Ciclista> getCiclis() {
+        return ciclis;
+    }
+
+    
+
+    
+    
+    
+    public void agregar(Ciclista c){
+       ciclis.add(c);
+        
+        
+    }
+    
+    
+    
     @Override
     public String toString() {
         return "distancia: "+kilometro+" Km"+" / Categoria: "+categoria;
+    }
+    
+    
+    public void pasarDescuento(){
+        int i=1;
+        for (Ciclista c1:ciclis) {
+            long premio=3000/(i*categoria);
+            c1.setTime_descuento(premio);
+            i++;
+        }
     }
     
     

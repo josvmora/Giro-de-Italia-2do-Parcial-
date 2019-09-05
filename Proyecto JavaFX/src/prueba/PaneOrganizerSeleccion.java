@@ -14,6 +14,8 @@ import entidades.ObtenerBytes;
 import entidades.Rutas;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,7 +69,7 @@ public class PaneOrganizerSeleccion {
     }
 
     public void createContent() {
-         ObservableList<Integer> n_posiciones = FXCollections.observableArrayList(1, 2, 3, 4, 5);
+        ObservableList<Integer> n_posiciones = FXCollections.observableArrayList(1, 2, 3, 4, 5);
         ObservableList<Ciclista> ol = FXCollections.observableArrayList();
         try {
             ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
@@ -118,17 +120,7 @@ public class PaneOrganizerSeleccion {
         //asumimos posiciones repetidas
         
         
-        iniciar.setOnAction(new EventHandler<ActionEvent>(){
-            public void handle(ActionEvent event){
-                PaneOrganizerSimulador rootcontainer = new PaneOrganizerSimulador(ruta,jugadores);
-                Stage stage = new Stage();
-                Scene scene = new Scene(rootcontainer.getRoot(),900,600);
-                stage.setTitle("Simulador");
-                stage.setScene(scene);
-                stage.show();
-            }
         
-    });
         
         
         
@@ -136,7 +128,7 @@ public class PaneOrganizerSeleccion {
 
             public void handle(ActionEvent event) {                
               //crear una instancia de la clase ciclista seleccionado
-              
+                System.out.println(ruta.getNombre());
               CiclistaSeleccionado cs= new CiclistaSeleccionado((Ciclista)ciclista_seleccionado.getValue(),(Integer)posiciones_ciclista.getValue());
               ciclistas_seleccionados.getItems().addAll(cs);                 
             }
@@ -245,7 +237,34 @@ public class PaneOrganizerSeleccion {
             }
 
         });
-
+        iniciar.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                
+                Stage stage = new Stage();
+                try {
+                ArrayList<Ciclista> ciclistas = Archivo.obtener_registros("Ciclista.dat");
+                
+                
+                
+                
+                
+                
+                
+                PaneOrganizerSimulador rootContainer = new PaneOrganizerSimulador(ruta,ciclistas,jugadores);
+                Scene scene = new Scene(rootContainer.getRoot(),900,600);
+                stage.setTitle("Simulacion");
+                stage.setScene(scene);
+                stage.show();
+               
+                
+                
+                } catch (Exception e) {
+                   System.out.println("ERROR");
+               }
+                
+                
+            }
+        });
     }
 
 //    public ArrayList<Jugador> getJugador() {

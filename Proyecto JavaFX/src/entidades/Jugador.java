@@ -35,6 +35,27 @@ public class Jugador {
     public void setCiclistas_elegidos(CiclistaSeleccionado[] ciclistas_elegidos) {
         this.ciclistas_elegidos = ciclistas_elegidos;
     }
+    
+    
+    public int Aciertos(ArrayList<Ciclista> cicl){
+        int acu=0;
+        
+        
+        for(CiclistaSeleccionado cs:ciclistas_elegidos){
+            int i=1;
+            for(Ciclista c:cicl){
+                if(c.getNombre().equals(cs.getCicli().getNombre())){
+                    if(i==cs.getPosicion()){
+                        acu+=1;
+                    }
+                }
+                i++;
+            }
+        }
+        
+        return acu;
+    }
+        
 
     @Override
     public String toString() {

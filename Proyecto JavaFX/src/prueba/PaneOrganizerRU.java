@@ -124,6 +124,8 @@ public class PaneOrganizerRU {
                 }
                 Image image = new Image(seleccionar_file.toURI().toString());
                 imageView.setImage(image);
+                imageView.setFitWidth(300);
+                imageView.setFitHeight(200);
                 
                     
                 
