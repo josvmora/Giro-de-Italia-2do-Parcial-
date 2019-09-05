@@ -31,7 +31,7 @@ public class HiloCronometro implements Runnable {
             
             for(minuto=0 ; minuto<60 ; minuto++){
                 for(segundo=0 ; segundo<60 ; segundo++){
-                    Platform.runLater(() -> cronometro.setText(minuto+":"+segundo));
+                    Platform.runLater(() -> cronometro.setText("Tiempo actual: "+minuto+":"+segundo));
                     Thread.sleep(1000);
                     
                 }
@@ -39,5 +39,13 @@ public class HiloCronometro implements Runnable {
         }catch(InterruptedException exc){
             exc.printStackTrace();
         }
+    }
+    
+    public int getMinuto(){
+        return minuto;
+    }
+    
+    public int getSegundo(){
+        return segundo;
     }
 }

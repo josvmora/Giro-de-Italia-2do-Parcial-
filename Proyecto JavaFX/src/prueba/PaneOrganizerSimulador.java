@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -36,6 +37,7 @@ import javafx.scene.shape.Rectangle;
  * @author MI
  */
 public class PaneOrganizerSimulador {
+
     private Button inicio;
     private Button pausa;
     private GridPane root;
@@ -49,17 +51,18 @@ public class PaneOrganizerSimulador {
     private Label lbl3;
     private Label lbl4;
     private Label lbl5;
-    public PaneOrganizerSimulador(Rutas ruta, ArrayList<Jugador> jugadores){
+
+    public PaneOrganizerSimulador(Rutas ruta, ArrayList<Jugador> jugadores) {
         this.jugadores = jugadores;
         this.ruta_seleccionada = ruta;
         createContent();
     }
-    
-    public Pane getRoot(){
+
+    public Pane getRoot() {
         return root;
     }
-    
-    public void createContent(){
+
+    public void createContent() {
         inicio = new Button("INICIAR");
         root = new GridPane();
         grupo = new Group();
@@ -70,68 +73,87 @@ public class PaneOrganizerSimulador {
         lbl3 = new Label("");
         lbl4 = new Label("");
         lbl5 = new Label("");
+        ArrayList<Label> ilabels = new ArrayList();
         ArrayList<Label> labels = new ArrayList<Label>();
-        
+
         try {
             iruta = ob.createImage(ruta_seleccionada.getImagen(), ruta_seleccionada.getNombre());
         } catch (IOException ex) {
             Logger.getLogger(PaneOrganizerSimulador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Canvas canvas = new Canvas(600,300);
+        Canvas canvas = new Canvas(600, 300);
         grupo.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.drawImage(iruta, 0, 0, 600, 300);
         Image iestacion = new Image("estacion.jpg");
-        for(Estaciones estacion: ruta_seleccionada.getEstaciones() ){
-            gc.drawImage(iestacion,((6*estacion.getKilometro())/ruta_seleccionada.getDistancia()),50,20,40);
+        for (Estaciones estacion : ruta_seleccionada.getEstaciones()) {
+            gc.drawImage(iestacion, ((600 * estacion.getKilometro()) / ruta_seleccionada.getDistancia()), 50, 20, 40);
         }
-        
-        
+
 //        final long starttime = System.currentTimeMillis();
 //        final long time = System.nanoTime();
 //        System.out.println(starttime);
 //        System.out.println(time);
         //tiempo_actual = new Label(starttime);
-        root.getChildren().add(grupo);
+        root.add(grupo, 0, 0);
         root.setAlignment(Pos.CENTER);
-        root.add(inicio,0,0);
-        root.add(tiempo_actual,1,0,2,1);
+        root.add(inicio, 1, 0);
+        root.add(tiempo_actual, 1, 1, 2, 1);
         labels.add(lbl1);
         labels.add(lbl2);
         labels.add(lbl3);
         labels.add(lbl4);
         labels.add(lbl5);
-        root.add(lbl1,0,5);
-        root.add(lbl2,0,6);
-        root.add(lbl3,0,7);
-        root.add(lbl4,0,8);
-        root.add(lbl5,0,9);
-        
-        
+        root.add(lbl1, 0, 5);
+        root.add(lbl2, 0, 6);
+        root.add(lbl3, 0, 7);
+        root.add(lbl4, 0, 8);
+        root.add(lbl5, 0, 9);
+
         ArrayList<Ciclista> ciclistas = new ArrayList<Ciclista>();
         ArrayList<CiclistaEnCarrera> ciclistaC = new ArrayList<CiclistaEnCarrera>();
-        try{
+        try {
             ciclistas = Archivo.obtener_registros("Ciclista.dat");
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("ERROR");
-        }    
-        for (Ciclista cic : ciclistas){
-            CiclistaEnCarrera c = new CiclistaEnCarrera(cic.getCodigo(),cic.getNombre(),cic.getImagen(),0);
+        }
+        for (Ciclista cic : ciclistas) {
+            CiclistaEnCarrera c = new CiclistaEnCarrera(cic.getCodigo(), cic.getNombre(), cic.getImagen(), 0);
             ciclistaC.add(c);
         }
-       
+
         inicio.setOnAction(new EventHandler<ActionEvent>() {
-           @Override
-           public void handle (ActionEvent event){
-               PaneOrganizerSimulador.this.inicio.setDisable(true);
-               new Thread(new HiloCronometro(PaneOrganizerSimulador.this,tiempo_actual,00,00)).start();
-               for(int i = 0 ; i < ciclistaC.size(); i++){
-                   new Thread(new HiloCiclistas(ciclistaC.get(i),ruta_seleccionada,labels.get(i),root)).start();
-               }
-               
-           }
+            @Override
+            public void handle(ActionEvent event) {
+                PaneOrganizerSimulador.this.inicio.setDisable(true);
+                HiloCronometro tc = new HiloCronometro(PaneOrganizerSimulador.this, tiempo_actual, 00, 00);
+                new Thread(tc).start();
+                for (int i = 0; i < ciclistaC.size(); i++) {
+                    try {
+                        Image iciclista = ob.createImage(ciclistaC.get(i).getFoto(), ciclistaC.get(i).getName());
+                        HiloCiclistas hc = new HiloCiclistas(ciclistaC.get(i), ruta_seleccionada, labels.get(i), root,tc.getMinuto(),tc.getSegundo());
+                        new Thread(hc).start();
+                        new AnimationTimer() {
+                            @Override
+                            public void handle(long currentNanoTime) {
+//                                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
+//
+//                                double x = 232 + 128 * Math.cos(t);
+//                                double y = 232 + 128 * Math.sin(t);
+
+                                gc.drawImage(iciclista, ((600*hc.getDistancia())/ruta_seleccionada.getDistancia()), 250, 20, 20);
+                            }
+                        }.start();
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(PaneOrganizerSimulador.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+            }
         });
     }
-    
+
 }

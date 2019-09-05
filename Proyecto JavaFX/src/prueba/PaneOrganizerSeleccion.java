@@ -122,7 +122,7 @@ public class PaneOrganizerSeleccion {
             public void handle(ActionEvent event){
                 PaneOrganizerSimulador rootcontainer = new PaneOrganizerSimulador(ruta,jugadores);
                 Stage stage = new Stage();
-                Scene scene = new Scene(rootcontainer.getRoot(),900,400);
+                Scene scene = new Scene(rootcontainer.getRoot(),900,600);
                 stage.setTitle("Simulador");
                 stage.setScene(scene);
                 stage.show();
